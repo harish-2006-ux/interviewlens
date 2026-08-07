@@ -125,11 +125,8 @@ git push -u origin main
 
 **Environment Variables (API Service):**
 ```
-MONGODB_URI = mongodb://localhost:27017/interview_prep
-  (or your MongoDB Atlas string)
-
-GEMINI_API_KEY = AQ.Ab8RN6K1J5DPGh5pqd-Rwvcm4-kSYJZA1FCr8Sdmzzwpw1WXNQ
-
+MONGODB_URI = <your-mongodb-atlas-connection-string>
+GEMINI_API_KEY = <your-gemini-api-key>
 NODE_ENV = production
 
 PORT = 3001

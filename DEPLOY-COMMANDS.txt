@@ -45,10 +45,9 @@ STEP 4: DEPLOY ON RENDER
 
 Environment Variables for API Service:
 ───────────────────────────────────────────────────────────────
-MONGODB_URI = mongodb://localhost:27017/interview_prep
-   (or use your MongoDB Atlas connection string)
+MONGODB_URI = <your-mongodb-connection-string>
    
-GEMINI_API_KEY = AQ.Ab8RN6K1J5DPGh5pqd-Rwvcm4-kSYJZA1FCr8Sdmzzwpw1WXNQ
+GEMINI_API_KEY = <your-gemini-api-key-here>
 
 NODE_ENV = production
 
