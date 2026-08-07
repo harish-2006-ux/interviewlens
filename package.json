@@ -1,0 +1,17 @@
+{
+  "name": "snpsu-interview-prep",
+  "version": "1.0.0",
+  "description": "AI-powered technical interview practice system",
+  "main": "server/index.js",
+  "scripts": {
+    "setup": "node setup.js",
+    "dev": "concurrently \"npm run dev:server\" \"npm run dev:client\"",
+    "dev:server": "cd server && npm run dev",
+    "dev:client": "cd client && npm run dev",
+    "install:all": "npm install && cd server && npm install && cd ../client && npm install",
+    "seed": "cd server && node scripts/seedData.js"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}

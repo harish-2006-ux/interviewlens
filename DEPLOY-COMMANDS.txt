@@ -1,0 +1,71 @@
+═══════════════════════════════════════════════════════════════
+🚀 COPY AND RUN THESE COMMANDS TO DEPLOY
+═══════════════════════════════════════════════════════════════
+
+STEP 1: INITIALIZE GIT (Run in your project folder)
+───────────────────────────────────────────────────────────────
+cd c:\Users\hhare\OneDrive\Desktop\snpsu
+
+git init
+
+git add .
+
+git commit -m "🚀 InterviewLens - AI Interview Platform Ready for Deployment"
+
+git branch -M main
+
+═══════════════════════════════════════════════════════════════
+
+STEP 2: CREATE GITHUB REPOSITORY
+───────────────────────────────────────────────────────────────
+1. Go to: https://github.com/new
+2. Repository name: interviewlens
+3. Description: AI-powered video interview practice platform
+4. Choose: Public or Private
+5. DON'T check "Initialize with README" (we have one)
+6. Click "Create repository"
+
+═══════════════════════════════════════════════════════════════
+
+STEP 3: CONNECT TO GITHUB (Replace YOUR_USERNAME)
+───────────────────────────────────────────────────────────────
+git remote add origin https://github.com/YOUR_USERNAME/interviewlens.git
+
+git push -u origin main
+
+═══════════════════════════════════════════════════════════════
+
+STEP 4: DEPLOY ON RENDER
+───────────────────────────────────────────────────────────────
+1. Go to: https://dashboard.render.com/
+2. Sign up with GitHub
+3. Click "New +" → "Blueprint"
+4. Select repository: interviewlens
+5. Click "Apply"
+
+Environment Variables for API Service:
+───────────────────────────────────────────────────────────────
+MONGODB_URI = mongodb://localhost:27017/interview_prep
+   (or use your MongoDB Atlas connection string)
+   
+GEMINI_API_KEY = AQ.Ab8RN6K1J5DPGh5pqd-Rwvcm4-kSYJZA1FCr8Sdmzzwpw1WXNQ
+
+NODE_ENV = production
+
+PORT = 3001
+
+═══════════════════════════════════════════════════════════════
+
+STEP 5: CONFIGURE FRONTEND (After API deploys)
+───────────────────────────────────────────────────────────────
+1. Copy your API URL (e.g., https://interviewlens-api-xxxx.onrender.com)
+2. Go to Frontend service → Environment
+3. Add variable:
+   VITE_API_URL = https://interviewlens-api-xxxx.onrender.com
+
+═══════════════════════════════════════════════════════════════
+
+🎉 DONE! Your app will be live at:
+https://interviewlens-client-xxxx.onrender.com
+
+═══════════════════════════════════════════════════════════════

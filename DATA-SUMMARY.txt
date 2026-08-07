@@ -1,0 +1,206 @@
+═══════════════════════════════════════════════════════════════
+📊 INTERVIEWLENS - DATA TYPES OVERVIEW
+═══════════════════════════════════════════════════════════════
+
+🗄️ DATABASE: MongoDB (NoSQL Document Database)
+
+═══════════════════════════════════════════════════════════════
+
+📋 6 MAIN COLLECTIONS:
+
+1️⃣  USERS
+    └─ Stores candidate profiles
+    └─ Data: name, target_role, resume_text, created_at
+    └─ Size: ~500 bytes per user
+
+2️⃣  SESSIONS
+    └─ Stores interview session metadata
+    └─ Data: user_id, role_title, difficulty, start/end times
+    └─ Size: ~300 bytes per session
+
+3️⃣  QUESTIONS
+    └─ Stores AI-generated interview questions
+    └─ Data: question_text, type (behavioral/technical/fit), sequence
+    └─ Size: ~200 bytes per question
+
+4️⃣  RESPONSES
+    └─ Stores candidate answers
+    └─ Data: answer_text, input_mode (text/voice), response_time
+    └─ Size: ~1-5 KB per response
+
+5️⃣  SCORES
+    └─ Stores AI analysis & scoring
+    └─ Data: technical_score, communication_score, filler_words, feedback
+    └─ Size: ~500 bytes per score
+
+6️⃣  SESSION SUMMARIES
+    └─ Stores overall session analysis
+    └─ Data: overall_score, strengths, improvements
+    └─ Size: ~2-3 KB per summary
+
+═══════════════════════════════════════════════════════════════
+
+🔢 DATA TYPES USED:
+
+TYPE          | USAGE
+─────────────────────────────────────────────────────────────
+ObjectId      | Unique identifiers (MongoDB auto-generated)
+String        | Text data (names, questions, answers, feedback)
+Number        | Scores (0-100), counts, time in seconds
+Boolean       | True/false flags (completed, star_detected)
+Date          | Timestamps (ISO 8601 format)
+Array         | Lists (questions, responses, filler words)
+Object        | Nested structures (filler word details)
+
+═══════════════════════════════════════════════════════════════
+
+🔗 RELATIONSHIPS:
+
+User ─────1:Many────→ Sessions
+Session ───1:Many────→ Questions
+Session ───1:Many────→ Responses
+Session ───1:1───────→ SessionSummary
+Question ──1:1───────→ Response
+Response ──1:1───────→ Score
+
+═══════════════════════════════════════════════════════════════
+
+📊 EXAMPLE DATA FLOW:
+
+1. User creates account
+   → User document: { name, target_role, resume_text }
+
+2. Start interview session
+   → Session document: { user_id, role_title, difficulty }
+   → AI generates 7 Questions: { text, type, sequence_no }
+
+3. User answers question
+   → Response document: { question_id, answer_text, input_mode }
+   → AI analyzes answer
+   → Score document: { technical_score, communication_score, filler_words }
+
+4. Complete session
+   → SessionSummary: { overall_score, strengths, improvements }
+
+5. View dashboard
+   → Aggregate all sessions for user
+   → Show progress trends over time
+
+═══════════════════════════════════════════════════════════════
+
+💾 STORAGE ESTIMATES:
+
+Per Interview Session:
+  • 1 Session doc         ~300 B
+  • 7 Questions          ~1.4 KB
+  • 7 Responses          ~7-35 KB
+  • 7 Scores             ~3.5 KB
+  • 1 Summary            ~3 KB
+  ─────────────────────────────
+  TOTAL per session: ~15-43 KB
+
+MongoDB Free Tier (512 MB):
+  → Can store: 10,000 - 30,000 interview sessions
+  → More than enough for MVP!
+
+═══════════════════════════════════════════════════════════════
+
+🎯 WHAT WE TRACK:
+
+USER METRICS:
+  ✓ Name & target role
+  ✓ Resume/background
+  ✓ Total sessions completed
+  ✓ Creation date
+
+SESSION METRICS:
+  ✓ Session duration
+  ✓ Difficulty level
+  ✓ Completion status
+  ✓ Overall score
+
+QUESTION METRICS:
+  ✓ Question text
+  ✓ Type (behavioral/technical/fit)
+  ✓ Sequence order
+  ✓ Follow-up questions
+
+RESPONSE METRICS:
+  ✓ Answer text (full transcription)
+  ✓ Input mode (text or voice)
+  ✓ Response time (seconds)
+  ✓ Word count
+
+SCORING METRICS:
+  ✓ Technical depth score (0-100)
+  ✓ Communication score (0-100)
+  ✓ Filler words detected (um, like, you know)
+  ✓ Hedge phrases (I think, probably, maybe)
+  ✓ Filler word ratio (percentage)
+  ✓ STAR method detection (boolean)
+  ✓ Missing concepts (array)
+  ✓ AI feedback (text)
+
+SUMMARY METRICS:
+  ✓ Overall score (weighted average)
+  ✓ Average technical score
+  ✓ Average communication score
+  ✓ Strengths (array of strings)
+  ✓ Improvements needed (array)
+
+═══════════════════════════════════════════════════════════════
+
+🔐 DATA WE DON'T STORE:
+
+❌ Video recordings
+❌ Audio recordings
+❌ Payment information
+❌ Social security numbers
+❌ Credit card data
+❌ Passwords (OAuth only)
+❌ Biometric data
+
+═══════════════════════════════════════════════════════════════
+
+🛡️ SECURITY MEASURES:
+
+✅ MongoDB connections encrypted (TLS/SSL)
+✅ Environment variables for credentials
+✅ CORS protection on API endpoints
+✅ Input validation on all data
+✅ No sensitive data in logs
+✅ Schema validation with Mongoose
+
+═══════════════════════════════════════════════════════════════
+
+📈 ANALYTICS CAPABILITIES:
+
+✓ Track score improvement over time
+✓ Identify patterns in communication issues
+✓ Compare performance across question types
+✓ Monitor session completion rates
+✓ Analyze average response times
+✓ Track filler word reduction progress
+
+═══════════════════════════════════════════════════════════════
+
+🎯 SUMMARY:
+
+DATABASE:     MongoDB (NoSQL)
+COLLECTIONS:  6 main collections
+DATA TYPES:   ObjectId, String, Number, Boolean, Date, Array, Object
+STORAGE:      ~15-43 KB per interview session
+CAPACITY:     10,000+ sessions on free tier
+SECURITY:     Encrypted, validated, CORS-protected
+
+Perfect for:
+  • Real-time interview analysis
+  • Progress tracking over time
+  • Detailed performance feedback
+  • AI-powered scoring & recommendations
+
+═══════════════════════════════════════════════════════════════
+
+📚 For detailed schema documentation, see: DATA-STRUCTURE.md
+
+═══════════════════════════════════════════════════════════════
