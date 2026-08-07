@@ -69,7 +69,7 @@ MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/interviewlens
 ### For Backend (Render):
 ```
 MONGODB_URI=<your-mongodb-connection-string>
-GEMINI_API_KEY=AQ.Ab8RN6K1J5DPGh5pqd-Rwvcm4-kSYJZA1FCr8Sdmzzwpw1WXNQ
+GEMINI_API_KEY=<your-gemini-api-key-here>
 NODE_ENV=production
 PORT=3001
 ```
