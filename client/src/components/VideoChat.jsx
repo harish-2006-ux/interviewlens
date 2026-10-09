@@ -26,7 +26,7 @@ function VideoChat({ isInterviewer = false, onConnectionChange, roomId, userInfo
   const initializeConnection = async () => {
     try {
       // Initialize Socket.IO
-      socketRef.current = io('http://localhost:3001')
+      socketRef.current = io(import.meta.env.VITE_API_URL || window.location.origin)
       
       // Get user media
       await initializeVideo()
