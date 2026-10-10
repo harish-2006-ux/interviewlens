@@ -9,7 +9,9 @@
     "dev:server": "cd server && npm run dev",
     "dev:client": "cd client && npm run dev",
     "install:all": "npm install && cd server && npm install && cd ../client && npm install",
-    "seed": "cd server && node scripts/seedData.js"
+    "seed": "cd server && node scripts/seedData.js",
+    "analytics:export": "node server/scripts/exportAnalytics.js",
+    "analytics:local": "python3 analytics/spark/session_analytics.py --local --input analytics/fixtures --output analytics/output/local-curated"
   },
   "devDependencies": {
     "concurrently": "^8.2.2"

@@ -263,3 +263,15 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 **Built with ❤️ for aspiring developers worldwide**
 
 *Practice makes perfect. InterviewLens shows you exactly how.*
+
+
+## Analytics pipeline (MongoDB → Spark/Hive/Pig)
+
+InterviewLens keeps MongoDB/Mongoose as its operational database and includes a separate historical analytics pipeline:
+
+```text
+MongoDB -> analytics export -> Spark/PySpark -> curated Parquet -> Hive queries/reports
+                                      \-> Pig legacy batch ETL (optional)
+```
+
+Run a MongoDB export with `npm run analytics:export` after configuring `MONGODB_URI`. For a dependency-free local validation run, use `npm run analytics:local`. Full setup and the data contract are documented in [`analytics/README.md`](analytics/README.md). `mongosh` is used for administrative connection checks; it is not called by the public API.

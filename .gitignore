@@ -20,6 +20,10 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+# Analytics exports and generated datasets
+analytics/output/*
+!analytics/output/.gitkeep
+
 # OS
 .DS_Store
 Thumbs.db
@@ -29,6 +33,10 @@ Thumbs.db
 .idea/
 *.swp
 *.swo
+
+# Python caches
+__pycache__/
+*.pyc
 
 # Testing
 coverage/

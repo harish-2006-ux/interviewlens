@@ -94,7 +94,7 @@ git push -u origin main
 5. Copy full connection string
 6. Update with your credentials:
    ```
-   mongodb+srv://h17976250_db_user:qd8m6Rsq074NbwvM@cluster0.XXXXX.mongodb.net/interviewlens
+   mongodb+srv://<username>:<password>@cluster0.XXXXX.mongodb.net/interviewlens
    ```
 
 **Completion Check:**
