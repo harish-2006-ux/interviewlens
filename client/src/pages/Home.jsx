@@ -2,22 +2,21 @@ import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import TypewriterSubtitle from '../components/TypewriterSubtitle'
-import FloatingParticles from '../components/FloatingParticles'
+
+const features = [
+  { number: '01', title: 'Practice naturally', text: 'Run text, AI, or live video interviews in one focused workspace.' },
+  { number: '02', title: 'See the evidence', text: 'Get technical and communication scores with specific feedback.' },
+  { number: '03', title: 'Improve over time', text: 'Track your progress across roles, sessions, and skill areas.' },
+]
 
 function Home() {
   const navigate = useNavigate()
   const [loaded, setLoaded] = useState(false)
   const [showForm, setShowForm] = useState(false)
-  const [formData, setFormData] = useState({
-    name: '',
-    target_role: '',
-    resume_text: '',
-    difficulty: 'mid'
-  })
+  const [formData, setFormData] = useState({ name: '', target_role: '', resume_text: '', difficulty: 'mid' })
   const [loading, setLoading] = useState(false)
 
   useEffect(() => {
-    // Trigger all effects after component mounts
     const timer = setTimeout(() => setLoaded(true), 100)
     return () => clearTimeout(timer)
   }, [])
@@ -25,33 +24,23 @@ function Home() {
   const handleSubmit = async (e) => {
     e.preventDefault()
     if (!formData.name || !formData.target_role) {
-      alert('Please fill in required fields')
+      alert('Please fill in your name and target role')
       return
     }
-
     setLoading(true)
     try {
-      // Create/get user
       const userResponse = await axios.post('/api/users', {
         name: formData.name,
         target_role: formData.target_role,
-        resume_text: formData.resume_text
+        resume_text: formData.resume_text,
       })
-
-      // Start session
       const sessionResponse = await axios.post('/api/sessions/start', {
         user_id: userResponse.data._id,
         role_title: formData.target_role,
-        difficulty: formData.difficulty
+        difficulty: formData.difficulty,
       })
-
-      // Navigate to interview
       navigate(`/interview/${sessionResponse.data.session_id}`, {
-        state: { 
-          questions: sessionResponse.data.questions,
-          userId: userResponse.data._id,
-          roleTitle: formData.target_role
-        }
+        state: { questions: sessionResponse.data.questions, userId: userResponse.data._id, roleTitle: formData.target_role },
       })
     } catch (error) {
       console.error('Error starting session:', error)
@@ -62,179 +51,50 @@ function Home() {
   }
 
   const handleDashboard = async () => {
-    // For demo, try to find the seeded user
     try {
       const response = await axios.post('/api/users', {
         name: 'John Developer',
         target_role: 'Full Stack Developer',
-        resume_text: 'Experienced in React, Node.js, MongoDB. Built several web applications.'
+        resume_text: 'Experienced in React, Node.js, MongoDB. Built several web applications.',
       })
       navigate(`/dashboard/${response.data._id}`)
     } catch (error) {
-      alert('Please run "npm run seed" first to create demo data, or start a new interview session')
+      alert('Please start the demo server first, then try again.')
     }
   }
 
   return (
-    <div className="min-h-screen lens-spotlight relative overflow-hidden">
-      <FloatingParticles />
-      <div className="scan-lines"></div>
-      
-      <div className="max-w-4xl mx-auto relative lens-content px-4">
-        <div className="text-center py-20">
-          {/* Dramatic Header */}
-          <div className="flex items-center justify-center gap-6 mb-8 animate-fadeInUp">
-            <div className="aperture-dramatic"></div>
-            <h1 className="lens-title">
-              InterviewLens
-            </h1>
-            <div className="aperture-dramatic"></div>
-          </div>
-          
-          <div className="animate-fadeInUp" style={{animationDelay: '1s'}}>
-            <TypewriterSubtitle 
-              text="See exactly where you lost the interview." 
-              delay={2000}
-              speed={50}
-            />
-          </div>
-          
-          <div className="text-xl text-white/90 mb-12 opacity-0 font-medium" 
-               style={{animation: 'fadeInUp 1s ease-out 4s forwards'}}>
-            Two scores, word-level evidence. Not just what you scored — why.
-          </div>
-          
-          {/* Animated Feature Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12 max-w-4xl mx-auto">
-            {[
-              { 
-                icon: "🎯", 
-                title: "Dual Scoring", 
-                desc: "Technical & Communication analysis",
-                delay: "3s" 
-              },
-              { 
-                icon: "⚡", 
-                title: "Real-time Analysis", 
-                desc: "Instant word-level feedback",
-                delay: "3.2s" 
-              },
-              { 
-                icon: "🔍", 
-                title: "Deep Insights", 
-                desc: "See exactly what went wrong",
-                delay: "3.4s" 
-              }
-            ].map((feature, i) => (
-              <div key={i} className="card-glass opacity-0 text-center" 
-                   style={{animation: `bounceIn 0.8s ease-out ${feature.delay} forwards`}}>
-                <div className="text-4xl mb-4">{feature.icon}</div>
-                <h3 className="text-xl font-bold text-white mb-2">{feature.title}</h3>
-                <p className="text-white/80">{feature.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Enhanced Action Panel */}
-        <div className="max-w-lg mx-auto opacity-0" style={{animation: 'slideInRight 1s ease-out 5s forwards'}}>
-          <div className="card relative">
-            <h2 className="text-3xl font-bold mb-8 text-center bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
-              Choose Your Experience
-            </h2>
-            
-            <div className="space-y-6">
-              <button
-                onClick={() => navigate('/join-room')}
-                className="btn-primary w-full group relative"
-              >
-                <span className="flex items-center justify-center gap-3">
-                  <span className="text-2xl">🎥</span>
-                  Real Video Interview
-                </span>
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000"></div>
-              </button>
-              
-              <button
-                onClick={() => navigate('/video-interview/demo-session/candidate', { 
-                  state: { 
-                    questions: [
-                      { id: 'demo-1', text: 'Tell me about yourself and your background.', type: 'behavioral', sequence_no: 1 },
-                      { id: 'demo-2', text: 'How would you approach solving a complex technical problem?', type: 'technical', sequence_no: 2 },
-                      { id: 'demo-3', text: 'Describe a challenging project you worked on.', type: 'behavioral', sequence_no: 3 }
-                    ], 
-                    userId: 'demo-user-1', 
-                    roleTitle: 'Software Engineer' 
-                  }
-                })}
-                className="btn-success w-full group relative"
-              >
-                <span className="flex items-center justify-center gap-3">
-                  <span className="text-2xl">🤖</span>
-                  AI Demo Interview
-                </span>
-              </button>
-              
-              <button
-                onClick={() => navigate('/interview/demo-session', { 
-                  state: { 
-                    questions: [
-                      { id: 'demo-1', text: 'How would you approach analyzing a large dataset?', type: 'technical', sequence_no: 1 }
-                    ], 
-                    userId: 'demo-user-1', 
-                    roleTitle: 'Software Engineer' 
-                  }
-                })}
-                className="btn-secondary w-full group relative"
-              >
-                <span className="flex items-center justify-center gap-3">
-                  <span className="text-2xl">📝</span>
-                  Text Practice Mode
-                </span>
-              </button>
-              
-              <button
-                onClick={handleDashboard}
-                className="btn-warning w-full group relative"
-              >
-                <span className="flex items-center justify-center gap-3">
-                  <span className="text-2xl">📊</span>
-                  Progress Dashboard
-                </span>
-              </button>
+    <div className="home-page">
+      <div className="home-orb home-orb-one" />
+      <div className="home-orb home-orb-two" />
+      <main className="home-shell">
+        <section className="hero-grid">
+          <div className={`hero-copy ${loaded ? 'is-visible' : ''}`}>
+            <div className="eyebrow"><span className="eyebrow-dot" /> AI-powered interview practice</div>
+            <h1>Practice with clarity.<br /><span>Interview with confidence.</span></h1>
+            <div className="hero-subtitle"><TypewriterSubtitle text="See exactly where your answer can improve." delay={250} speed={32} /></div>
+            <p className="hero-description">InterviewLens turns every practice session into practical coaching, combining technical depth, communication signals, and progress you can actually track.</p>
+            <div className="hero-actions">
+              <button onClick={() => setShowForm(true)} className="btn-primary hero-primary">Start a practice session <span>→</span></button>
+              <button onClick={() => navigate('/video-interview/demo-session/candidate', { state: { questions: [{ id: 'demo-1', text: 'Tell me about yourself and your background.', type: 'behavioral', sequence_no: 1 }, { id: 'demo-2', text: 'How would you approach solving a complex technical problem?', type: 'technical', sequence_no: 2 }, { id: 'demo-3', text: 'Describe a challenging project you worked on.', type: 'behavioral', sequence_no: 3 }], userId: 'demo-user-1', roleTitle: 'Software Engineer' } })} className="hero-text-button">Try the AI demo <span>↗</span></button>
             </div>
-
-            {/* Floating Action Hint */}
-            <div className="mt-8 text-center">
-              <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-full px-6 py-3 text-white/70 animate-pulse">
-                <div className="w-2 h-2 bg-green-400 rounded-full animate-ping"></div>
-                <span className="text-sm font-medium">Choose any option to begin</span>
-              </div>
-            </div>
+            <div className="hero-proof"><div className="proof-avatars"><span>JD</span><span>AK</span><span>+</span></div><div><strong>Built for deliberate practice</strong><small>Technical + communication insights</small></div></div>
           </div>
-        </div>
 
-        {/* Enhanced Bottom Stats */}
-        <div className="text-center py-16">
-          <div className="grid grid-cols-3 gap-8 max-w-xl mx-auto">
-            {[
-              { number: "2", label: "Scoring Systems", suffix: "" },
-              { number: "7", label: "AI Questions", suffix: "+" },
-              { number: "100", label: "Analysis Points", suffix: "%" }
-            ].map((stat, i) => (
-              <div key={i} className="opacity-0" 
-                   style={{animation: `fadeInUp 0.6s ease-out ${6 + i * 0.2}s forwards`}}>
-                <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20 hover:scale-105 transition-all duration-300">
-                  <div className="text-4xl font-bold text-white mb-2">
-                    {stat.number}<span className="text-2xl text-purple-300">{stat.suffix}</span>
-                  </div>
-                  <div className="text-sm text-white/70 font-medium">{stat.label}</div>
-                </div>
-              </div>
-            ))}
+          <div className="hero-panel">
+            <div className="panel-kicker">Your practice workspace <span className="status-pill"><i /> Live demo</span></div>
+            <div className="score-preview"><div className="score-ring"><div><strong>82</strong><small>overall</small></div></div><div><span className="preview-label">Latest session</span><h2>Full Stack Developer</h2><p>Strong structure · Keep adding concrete examples</p><div className="mini-bars"><div><span>Technical</span><b><i style={{ width: '86%' }} /></b><em>86</em></div><div><span>Communication</span><b><i style={{ width: '78%' }} /></b><em>78</em></div></div></div></div>
+            <div className="panel-divider" />
+            <div className="panel-bottom"><span><b>4</b> sessions this month</span><button onClick={handleDashboard}>View dashboard <span>→</span></button></div>
           </div>
-        </div>
-      </div>
+        </section>
+
+        <section className="feature-strip">{features.map((feature) => <article className="feature-item" key={feature.number}><span>{feature.number}</span><div><h3>{feature.title}</h3><p>{feature.text}</p></div></article>)}</section>
+
+        {showForm && <div className="modal-backdrop" onClick={() => setShowForm(false)}><div className="start-modal" onClick={(e) => e.stopPropagation()}><button className="modal-close" onClick={() => setShowForm(false)}>×</button><div className="eyebrow"><span className="eyebrow-dot" /> New practice session</div><h2>Set up your interview</h2><p className="modal-copy">Tell us a little about your goal. We will build the first session around it.</p><form onSubmit={handleSubmit} className="session-form"><label>Your name<input value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} placeholder="e.g. Priya Sharma" required /></label><label>Target role<input value={formData.target_role} onChange={(e) => setFormData({ ...formData, target_role: e.target.value })} placeholder="e.g. Frontend Developer" required /></label><div className="form-row"><label>Difficulty<select value={formData.difficulty} onChange={(e) => setFormData({ ...formData, difficulty: e.target.value })}><option value="junior">Junior</option><option value="mid">Mid-level</option><option value="senior">Senior</option></select></label><label>Background <span className="optional">optional</span><input value={formData.resume_text} onChange={(e) => setFormData({ ...formData, resume_text: e.target.value })} placeholder="React, APIs, databases..." /></label></div><button className="btn-primary form-submit" disabled={loading}>{loading ? 'Preparing session…' : 'Continue to interview'} <span>→</span></button></form></div></div>}
+
+        <section className="home-footer"><span>InterviewLens</span><span>Evidence-led practice for your next opportunity.</span></section>
+      </main>
     </div>
   )
 }
