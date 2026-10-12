@@ -50,19 +50,6 @@ function Home() {
     }
   }
 
-  const handleDashboard = async () => {
-    try {
-      const response = await axios.post('/api/users', {
-        name: 'John Developer',
-        target_role: 'Full Stack Developer',
-        resume_text: 'Experienced in React, Node.js, MongoDB. Built several web applications.',
-      })
-      navigate(`/dashboard/${response.data._id}`)
-    } catch (error) {
-      alert('Please start the demo server first, then try again.')
-    }
-  }
-
   return (
     <div className="home-page">
       <div className="home-orb home-orb-one" />
@@ -76,16 +63,16 @@ function Home() {
             <p className="hero-description">InterviewLens turns every practice session into practical coaching, combining technical depth, communication signals, and progress you can actually track.</p>
             <div className="hero-actions">
               <button onClick={() => setShowForm(true)} className="btn-primary hero-primary">Start a practice session <span>→</span></button>
-              <button onClick={() => navigate('/video-interview/demo-session/candidate', { state: { questions: [{ id: 'demo-1', text: 'Tell me about yourself and your background.', type: 'behavioral', sequence_no: 1 }, { id: 'demo-2', text: 'How would you approach solving a complex technical problem?', type: 'technical', sequence_no: 2 }, { id: 'demo-3', text: 'Describe a challenging project you worked on.', type: 'behavioral', sequence_no: 3 }], userId: 'demo-user-1', roleTitle: 'Software Engineer' } })} className="hero-text-button">Try the AI demo <span>↗</span></button>
+              <button onClick={() => navigate('/join-room')} className="hero-text-button">Join a live room <span>↗</span></button>
             </div>
             <div className="hero-proof"><div className="proof-avatars"><span>JD</span><span>AK</span><span>+</span></div><div><strong>Built for deliberate practice</strong><small>Technical + communication insights</small></div></div>
           </div>
 
           <div className="hero-panel">
-            <div className="panel-kicker">Your practice workspace <span className="status-pill"><i /> Live demo</span></div>
+            <div className="panel-kicker">Your practice workspace <span className="status-pill"><i /> Live system</span></div>
             <div className="score-preview"><div className="score-ring"><div><strong>82</strong><small>overall</small></div></div><div><span className="preview-label">Latest session</span><h2>Full Stack Developer</h2><p>Strong structure · Keep adding concrete examples</p><div className="mini-bars"><div><span>Technical</span><b><i style={{ width: '86%' }} /></b><em>86</em></div><div><span>Communication</span><b><i style={{ width: '78%' }} /></b><em>78</em></div></div></div></div>
             <div className="panel-divider" />
-            <div className="panel-bottom"><span><b>4</b> sessions this month</span><button onClick={handleDashboard}>View dashboard <span>→</span></button></div>
+            <div className="panel-bottom"><span><b>4</b> sessions this month</span><button onClick={() => setShowForm(true)}>Start a session <span>→</span></button></div>
           </div>
         </section>
 

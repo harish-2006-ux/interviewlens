@@ -194,7 +194,7 @@ function JoinRoom() {
             </div>
           </div>
 
-          {/* Live Demo Hint */}
+          {/* Live connection hint */}
           {formData.roomId && formData.name && (
             <div className="mt-6 p-4 bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl border-2 border-green-200 animate-bounceIn">
               <div className="flex items-center gap-3">

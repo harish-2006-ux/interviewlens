@@ -12,9 +12,9 @@ function Navbar() {
         </Link>
         <div className="nav-links">
           <Link to="/" className={location.pathname === '/' ? 'active' : ''}>Home</Link>
-          <Link to="/dashboard/demo-user-1" className={location.pathname.startsWith('/dashboard') ? 'active' : ''}>Progress</Link>
+          <Link to="/join-room" className={location.pathname.startsWith('/join-room') ? 'active' : ''}>Live Room</Link>
           <span className="nav-divider" />
-          <span className="nav-status"><i /> Demo online</span>
+          <span className="nav-status"><i /> Live system</span>
         </div>
       </div>
     </nav>
