@@ -1,0 +1,145 @@
+═══════════════════════════════════════════════════════════════
+🚀 INTERVIEWLENS - DEPLOYMENT COMMANDS
+═══════════════════════════════════════════════════════════════
+
+📋 STEP 1: INITIALIZE GIT & PUSH TO GITHUB
+───────────────────────────────────────────────────────────────
+
+# Initialize Git
+git init
+
+# Add all files
+git add .
+
+# Commit
+git commit -m "🚀 InterviewLens - AI Interview Platform"
+
+# Set main branch
+git branch -M main
+
+# Create repository on GitHub: https://github.com/new
+# Name: interviewlens
+
+# Add remote (replace YOUR_USERNAME)
+git remote add origin https://github.com/YOUR_USERNAME/interviewlens.git
+
+# Push
+git push -u origin main
+
+═══════════════════════════════════════════════════════════════
+
+📋 STEP 2: MONGODB ATLAS SETUP
+───────────────────────────────────────────────────────────────
+
+1. Go to: https://www.mongodb.com/cloud/atlas/register
+2. Create FREE M0 cluster
+3. Create database user: interviewlens / [autogenerate password]
+4. Network Access: Allow 0.0.0.0/0
+5. Get connection string:
+   mongodb+srv://interviewlens:<password>@cluster.mongodb.net/interviewlens
+
+═══════════════════════════════════════════════════════════════
+
+📋 STEP 3: DEPLOY ON RENDER
+───────────────────────────────────────────────────────────────
+
+1. Go to: https://dashboard.render.com/
+2. Sign up with GitHub
+3. New + → Blueprint
+4. Select repository: interviewlens
+5. Click Apply
+
+Environment Variables for API service:
+───────────────────────────────────────────────────────────────
+MONGODB_URI = mongodb+srv://interviewlens:PASSWORD@cluster.mongodb.net/interviewlens
+GEMINI_API_KEY = AQ.Ab8RN6K1J5DPGh5pqd-Rwvcm4-kSYJZA1FCr8Sdmzzwpw1WXNQ
+NODE_ENV = production
+PORT = 3001
+
+Environment Variables for CLIENT service (add after API deploys):
+───────────────────────────────────────────────────────────────
+VITE_API_URL = https://interviewlens-api-xxxx.onrender.com
+
+═══════════════════════════════════════════════════════════════
+
+📋 STEP 4: UPDATE CORS
+───────────────────────────────────────────────────────────────
+
+# After deployment, update server/index.js line 15:
+origin: ['https://interviewlens-client-xxxx.onrender.com']
+
+# Then commit and push:
+git add server/index.js
+git commit -m "Update CORS for production"
+git push
+
+═══════════════════════════════════════════════════════════════
+
+🎉 YOUR URLS
+───────────────────────────────────────────────────────────────
+
+Frontend: https://interviewlens-client-xxxx.onrender.com
+API:      https://interviewlens-api-xxxx.onrender.com
+Health:   https://interviewlens-api-xxxx.onrender.com/api/health
+
+═══════════════════════════════════════════════════════════════
+
+✅ VERIFICATION CHECKLIST
+───────────────────────────────────────────────────────────────
+
+□ Frontend loads
+□ API health check responds
+□ Can start new interview
+□ AI generates questions
+□ Responses are scored
+□ Dashboard displays data
+□ Video chat works (if 2 users)
+
+═══════════════════════════════════════════════════════════════
+
+🛠️ TROUBLESHOOTING
+───────────────────────────────────────────────────────────────
+
+Issue: "Cannot connect to API"
+→ Wait 30 seconds (free tier wake-up)
+→ Check VITE_API_URL in frontend environment
+→ Verify CORS in server/index.js
+
+Issue: "MongoDB connection error"
+→ Check connection string password
+→ Verify IP whitelist has 0.0.0.0/0
+→ Ensure database user has read/write access
+
+Issue: "No AI questions"
+→ Check GEMINI_API_KEY in backend environment
+→ View logs in Render dashboard
+→ Verify API quota at https://aistudio.google.com
+
+═══════════════════════════════════════════════════════════════
+
+📚 DOCUMENTATION FILES
+───────────────────────────────────────────────────────────────
+
+DEPLOY-NOW.md                  → Step-by-step visual guide
+deploy.md                      → Quick 5-minute deployment
+DEPLOYMENT.md                  → Detailed deployment guide
+PRE-DEPLOYMENT-CHECKLIST.md   → Pre-flight checklist
+README.md                      → Project documentation
+
+═══════════════════════════════════════════════════════════════
+
+🎯 NEXT STEPS
+───────────────────────────────────────────────────────────────
+
+1. Test your live app thoroughly
+2. Share on LinkedIn/Twitter
+3. Add to your portfolio
+4. Get user feedback
+5. Consider custom domain
+6. Monitor usage & optimize
+
+═══════════════════════════════════════════════════════════════
+
+💪 You're ready to deploy! Follow DEPLOY-NOW.md for detailed steps.
+
+═══════════════════════════════════════════════════════════════
