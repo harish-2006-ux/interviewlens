@@ -5,6 +5,7 @@ import VideoInterview from './pages/VideoInterview'
 import JoinRoom from './pages/JoinRoom'
 import Dashboard from './pages/Dashboard'
 import SessionReport from './pages/SessionReport'
+import Analytics from './pages/Analytics'
 import Navbar from './components/Navbar'
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
           <Route path="/video-interview/:sessionId/:mode" element={<VideoInterview />} />
           <Route path="/dashboard/:userId" element={<Dashboard />} />
           <Route path="/report/:sessionId" element={<SessionReport />} />
+          <Route path="/analytics" element={<Analytics />} />
         </Routes>
       </main>
     </div>

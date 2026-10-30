@@ -13,6 +13,7 @@ function Navbar() {
         <div className="nav-links">
           <Link to="/" className={location.pathname === '/' ? 'active' : ''}>Home</Link>
           <Link to="/dashboard/demo-user-1" className={location.pathname.startsWith('/dashboard') ? 'active' : ''}>Progress</Link>
+          <Link to="/analytics" className={location.pathname === '/analytics' ? 'active' : ''}>Analytics</Link>
           <span className="nav-divider" />
           <span className="nav-status"><i /> Demo online</span>
         </div>

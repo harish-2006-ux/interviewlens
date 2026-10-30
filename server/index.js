@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 // Import routes
 const sessionRoutes = require('./routes/sessions');
 const userRoutes = require('./routes/users');
+const analyticsRoutes = require('./routes/analytics');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -27,6 +28,7 @@ mongoose.connect(process.env.MONGODB_URI)
 // Routes
 app.use('/api/sessions', sessionRoutes);
 app.use('/api/users', userRoutes);
+app.use('/api/analytics', analyticsRoutes);
 
 app.get('/api/health', (req, res) => {
   res.json({ 
